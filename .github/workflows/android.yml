@@ -8,30 +8,12 @@ on:
       - 'v*'
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-          cache: gradle
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Build with Gradle
-        run: ./gradlew build
   apk:
     name: Generate APK
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: set up JDK 11
         uses: actions/setup-java@v2
         with:
@@ -41,11 +23,6 @@ jobs:
 
       - name: Build APK
         run: bash ./gradlew assembleRelease --stacktrace
-      - name: Upload APK
-        uses: actions/upload-artifact@v1
-        with:
-          name: my-compose-app
-          path: app/build/outputs/apk/release/my-compose-app-release.apk
 
   sign-release:
     name: Sign release
