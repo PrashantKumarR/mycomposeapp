@@ -44,13 +44,6 @@ jobs:
           cache: gradle
       - name: Build APK
         run: ./gradlew assemble${{ github.event.inputs.flavourName }}${{github.event.inputs.buildType}} --stacktrace
-#      - name: Form Output Directory
-#        uses: ASzc/change-string-case-action@v2
-#        env:
-#          BUILD_DIR: ${{ github.event.inputs.flavourName.lowercase }}/${{github.event.inputs.buildType.lowercase}}
-#        run:
-#          echo "BUILD_DIR="${COMMIT_VAR} >> $GITHUB_ENV
-#          echo "BUILD_DIR set to ${BUILD_DIR}"
       - uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
@@ -66,4 +59,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: FedMobile-${{ github.event.inputs.flavourName }}-${{github.event.inputs.buildType}}
-          path: app/build/outputs/apk/${{ github.event.inputs.flavourName }}/${{github.event.inputs.buildType}}/*.apk
+          path: app/build/outputs/apk/${{ github.event.inputs.flavourName }}/${{github.event.inputs.buildType}}/-signed*.apk
