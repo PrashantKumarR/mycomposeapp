@@ -43,8 +43,8 @@ jobs:
           distribution: 'adopt'
           cache: gradle
       - name: Build
-        run: ./gradlew assemble${{ github.event.inputs.flavourName }}${{github.event.inputs.buildType}} --stacktrace
-      - name:
+        run: ./gradlew build --no-daemon
+      - name: Form Output Directory
         uses: ASzc/change-string-case-action@v2
         env:
           BUILD_DIR: ${{ github.event.inputs.flavourName.lowercase }}/${{github.event.inputs.buildType.lowercase}}
