@@ -30,7 +30,7 @@ jobs:
           distribution: 'adopt'
           cache: gradle
       - name: Build
-        run: ./gradlew build
+        run: ./gradlew build --no-daemon
       - name: Build APK
         run: ./gradlew ${{github.event.inputs.buildCommandName}} --stacktrace
       - uses: r0adkll/sign-android-release@v1
@@ -47,5 +47,4 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          name: ${{github.event.inputs.versionName}}
           path: app/build/outputs/apk/release
