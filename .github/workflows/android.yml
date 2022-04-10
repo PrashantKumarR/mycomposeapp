@@ -1,12 +1,6 @@
 name: Android CI
 
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - 'v*'
-
   workflow_dispatch:
     inputs:
       flavourName:
@@ -53,9 +47,10 @@ jobs:
       - name: Build APK
         run: ./gradlew assemble${{ github.event.inputs.flavourName }}${{github.event.inputs.buildType}} --stacktrace
       - uses: r0adkll/sign-android-release@v1
+      - uses: ASzc/change-string-case-action@v2
         id: sign_app
         with:
-          releaseDirectory: app/build/outputs/apk/${{ github.event.inputs.flavourName }}/${{github.event.inputs.buildType}}
+          releaseDirectory: app/build/outputs/apk/${{ github.event.inputs.flavourName.lowercase }}/${{github.event.inputs.buildType.lowercase}}
 #          releaseDirectory: app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
