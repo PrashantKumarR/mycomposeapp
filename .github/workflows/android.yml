@@ -2,16 +2,13 @@ name: Android CI
 
 on:
   push:
-#    branches:
-#      - main
+    branches:
+      - main
     tags:
       - 'v*'
 
   workflow_dispatch:
     inputs:
-      branchName:
-        description: 'Branch to be used for the build'
-        required: true
       flavourName:
         type: choice
         description: 'Chose the Flavour'
