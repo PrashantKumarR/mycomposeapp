@@ -7,6 +7,12 @@ on:
     tags:
       - 'v*'
 
+  workflow_dispatch:
+    inputs:
+      versionName:
+        description: 'Version Name in format = "2.0.4"'
+        required: true
+
 jobs:
   apk:
     name: Generate APK
@@ -38,5 +44,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          name: my-compose-app
+          name: my-compose-app${{github.event.inputs.versionName}}
           path: app/build/outputs/apk/release
