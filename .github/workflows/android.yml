@@ -44,6 +44,8 @@ jobs:
           cache: gradle
       - name: Build
         run: ./gradlew build --no-daemon
+      - name: Build APK
+        run: ./gradlew assemble${{ github.event.inputs.flavourName }}${{github.event.inputs.buildType}} --stacktrace
       - name: Form Output Directory
         uses: ASzc/change-string-case-action@v2
         env:
