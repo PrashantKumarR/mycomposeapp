@@ -42,9 +42,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: gradle
-#      - name: Build
-#        run: ./gradlew build --no-daemon
-      - name: Build APK
+      - name: Build
         run: ./gradlew assemble${{ github.event.inputs.flavourName }}${{github.event.inputs.buildType}} --stacktrace
       - name:
         uses: ASzc/change-string-case-action@v2
