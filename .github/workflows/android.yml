@@ -8,23 +8,23 @@ on:
         description: 'Chose the Flavour'
         options:
           - staging
-          - Production
-          - Dr
-          - Uat
-          - UatEmulator
-          - UatActual
-          - UatPcloudy
-          - Dev
-          - DevEmulator
-          - DevActual
-          - DevPcloudy
+          - production
+          - dr
+          - uat
+          - uatEmulator
+          - uatActual
+          - uatPcloudy
+          - dev
+          - devEmulator
+          - devActual
+          - devPcloudy
         required: true
       buildType:
         type: choice
         description: 'Build Type'
         options:
-          - Debug
-          - Release
+          - debug
+          - release
         required: true
 
 jobs:
@@ -50,10 +50,13 @@ jobs:
         uses: ASzc/change-string-case-action@v2
         env:
           BUILD_DIR: ${{ github.event.inputs.flavourName.lowercase }}/${{github.event.inputs.buildType.lowercase}}
+        run:
+          echo "BUILD_DIR="${COMMIT_VAR} >> $GITHUB_ENV
+          echo "BUILD_DIR set to ${BUILD_DIR}"
       - uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDirectory: app/build/outputs/apk/${ BUILD_DIR }
+          releaseDirectory: app/build/outputs/apk/${{ github.event.inputs.flavourName }}/${{github.event.inputs.buildType}}
 #          releaseDirectory: app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
