@@ -12,8 +12,31 @@ on:
       versionName:
         description: 'Version Name in format = "2.0.4"'
         required: true
-      buildCommandName:
-        description: 'Flavour Name in format = "assembleDevDebug/assembleProductionRelease" etc'
+#      flavourName:
+#        description: 'Flavour Name in format = "Dev/Production/Uat" etc'
+#        required: true
+      flavourName:
+        type: choice
+        description: 'Chose the Flavour'
+        options:
+          - staging
+          - Production
+          - Dr
+          - Uat
+          - UatEmulator
+          - UatActual
+          - UatPcloudy
+          - Dev
+          - DevEmulator
+          - DevActual
+          - DevPcloudy
+        required: true
+      buildType:
+        type: choice
+        description: 'Build Type'
+        options:
+          - Debug
+          - Release
         required: true
 
 jobs:
@@ -32,7 +55,7 @@ jobs:
       - name: Build
         run: ./gradlew build --no-daemon
       - name: Build APK
-        run: ./gradlew ${{github.event.inputs.buildCommandName}} --stacktrace
+        run: ./gradlew assemble${{ github.event.inputs.flavourName }}${{github.event.inputs.buildType}} --stacktrace
       - uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
