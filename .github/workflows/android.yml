@@ -32,7 +32,7 @@ jobs:
       - name: Build
         run: ./gradlew build
       - name: Build APK
-        run: ./gradlew {{github.event.inputs.flavourName}} --stacktrace
+        run: ./gradlew ${{github.event.inputs.flavourName}} --stacktrace
       - uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
