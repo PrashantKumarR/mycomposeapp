@@ -58,5 +58,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          name: app/build/outputs/apk/${{ github.event.inputs.flavourName }}/${{github.event.inputs.buildType}}/*-signed.apk
+          name: FedMobile-${{ github.event.inputs.flavourName }}-${{github.event.inputs.buildType}}
           path: app/build/outputs/apk/${{ github.event.inputs.flavourName }}/${{github.event.inputs.buildType}}/*-signed.apk
