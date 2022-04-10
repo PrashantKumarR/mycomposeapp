@@ -9,12 +9,9 @@ on:
 
   workflow_dispatch:
     inputs:
-      versionName:
-        description: 'Version Name in format = "2.0.4"'
+      branchName:
+        description: 'Branch to be used for the build'
         required: true
-#      flavourName:
-#        description: 'Flavour Name in format = "Dev/Production/Uat" etc'
-#        required: true
       flavourName:
         type: choice
         description: 'Chose the Flavour'
@@ -46,6 +43,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.branchName }}
       - name: set up JDK 11
         uses: actions/setup-java@v2
         with:
