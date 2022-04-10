@@ -42,8 +42,6 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: gradle
-#      - name: Build
-#        run: ./gradlew build --no-daemon
       - name: Build APK
         run: ./gradlew assemble${{ github.event.inputs.flavourName }}${{github.event.inputs.buildType}} --stacktrace
 #      - name: Form Output Directory
@@ -57,7 +55,6 @@ jobs:
         id: sign_app
         with:
           releaseDirectory: app/build/outputs/apk/${{ github.event.inputs.flavourName }}/${{github.event.inputs.buildType}}
-#          releaseDirectory: app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
@@ -68,4 +65,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          path: app/build/outputs/apk/${{ github.event.inputs.flavourName }}/${{github.event.inputs.buildType}}
+          name: FedMobile-${{ github.event.inputs.flavourName }}-${{github.event.inputs.buildType}}
+          path: app/build/outputs/apk/${{ github.event.inputs.flavourName }}/${{github.event.inputs.buildType}}/*.apk
